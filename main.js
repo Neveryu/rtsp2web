@@ -106,7 +106,7 @@ class Channel {
 		this.mpeg2Muxer.instance = new Mpeg2Muxer({
       ffmpegOptions : {
         "-stats": "", // 没有必要值的选项使用空字符串
-        "-r": 30,
+        "-r": 20,
         "-s": "1920x1080",
         "-b:v": "2000k"
       },
