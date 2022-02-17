@@ -1,0 +1,28 @@
+{
+  "name": "rtsp2web",
+  "version": "1.0.0",
+  "description": "在web页面中直接播放rtsp视频流",
+  "keywords": [
+    "media source extensions",
+    "ffmpeg",
+    "socket.io"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "",
+  "dependencies": {
+    "base-64": "^1.0.0",
+    "ws": "^8.5.0"
+  }
+}
