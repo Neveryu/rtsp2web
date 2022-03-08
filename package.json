@@ -3,19 +3,30 @@
   "version": "1.0.0",
   "description": "在web页面中直接播放rtsp视频流",
   "keywords": [
+    "rtsp",
     "media source extensions",
     "ffmpeg",
     "socket.io"
   ],
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "pm2 start example/index.js --name rtsp",
+    "stop": "pm2 stop rtsp",
+    "delete": "pm2 delete rtsp",
+    "restart": "npm run stop && npm run delete && npm run server",
+    "node": "node example/index.js",
+    "stop-all": "pm2 stop all",
+    "delete-all": "pm2 delete all",
+    "list": "pm2 list",
+    "monit": "pm2 monit",
+    "reload": "pm2 reload all"
   },
   "repository": {
     "type": "git",
     "url": ""
   },
-  "author": "",
+  "author": "Never Yu",
   "license": "ISC",
   "bugs": {
     "url": ""

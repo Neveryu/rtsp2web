@@ -11,8 +11,9 @@
 const http = require('http')
 const Stream =  require('node-rtsp-stream')
 
-// rtsp视频流源地址；可以先在VCL中测试摄像头是否接受正常
-const rtsp_url = 'rtsp://admin:123456aa@172.16.1.80/Streaming/Channels/101'
+// rtsp视频流源地址；可以先在VCL中测试摄像头是否播放正常
+// const rtsp_url = 'rtsp://admin:123456aa@172.16.1.80/Streaming/Channels/101'
+const rtsp_url = 'rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov'
 
 const stream = new Stream({
   name: "socket",

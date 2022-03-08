@@ -16,8 +16,8 @@
 </body>
 <script>
 	var rtsp1 = 'rtsp://admin:123456aa@172.16.1.70/Streaming/Channels/102'
-	var rtsp2 = 'rtsp://admin:123456aa@172.16.1.78/Streaming/Channels/101'
-	var rtsp3 = 'rtsp://hdsrtsp.cntv.chinacache.net:8000/live/rtp/channel15'
+	var rtsp2 = 'rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov'
+	var rtsp3 = 'rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov'
   window.onload = () => {
   	// 将rtsp视频流地址进行btoa处理一下
     new JSMpeg.Player("ws://localhost:9999/flv?url="+btoa(rtsp1), {
