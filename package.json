@@ -14,7 +14,7 @@
     "start": "pm2 start example/index.js --name rtsp",
     "stop": "pm2 stop rtsp",
     "delete": "pm2 delete rtsp",
-    "restart": "npm run stop && npm run delete && npm run server",
+    "restart": "npm stop && npm run delete && npm start",
     "node": "node example/index.js",
     "stop-all": "pm2 stop all",
     "delete-all": "pm2 delete all",
@@ -24,14 +24,14 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git+https://github.com/NeverYu/rtsp2web.git"
   },
   "author": "Never Yu",
   "license": "ISC",
   "bugs": {
     "url": ""
   },
-  "homepage": "",
+  "homepage": "https://github.com/NeverYu/rtsp2web#readme",
   "dependencies": {
     "base-64": "^1.0.0",
     "ws": "^8.5.0"
