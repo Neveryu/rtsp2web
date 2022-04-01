@@ -1,18 +1,23 @@
 {
   "name": "rtsp2web",
   "version": "1.0.0",
-  "description": "在web页面中直接播放rtsp视频流",
+  "description": "帮你在web页面中直接播放rtsp视频流，支持同时播放多个",
   "keywords": [
     "rtsp",
     "media source extensions",
     "ffmpeg",
     "socket.io"
   ],
-  "main": "main.js",
+  "main": "dist/rtsp2web.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "pm2 start example/index.js --name rtsp",
     "stop": "pm2 stop rtsp",
+    "prebuild": "rimraf dist",
+    "build": "rollup -c rollup.config.js",
     "delete": "pm2 delete rtsp",
     "restart": "npm stop && npm run delete && npm start",
     "node": "node example/index.js",
@@ -24,16 +29,31 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NeverYu/rtsp2web.git"
+    "url": "https://github.com/NeverYu/rtsp2web.git"
   },
-  "author": "Never Yu",
+  "author": {
+    "name": "NeverYu",
+    "email": "never_yu@qq.com",
+    "url": "neveryu.github.io"
+  },
   "license": "ISC",
   "bugs": {
-    "url": ""
+    "url": "https://github.com/NeverYu/rtsp2web/issues"
   },
   "homepage": "https://github.com/NeverYu/rtsp2web#readme",
   "dependencies": {
     "base-64": "^1.0.0",
+    "pm2": "^5.2.0",
     "ws": "^8.5.0"
+  },
+  "devDependencies": {
+    "lodash.camelcase": "^4.3.0",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.70.1",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-sourcemaps": "^0.6.3",
+    "rollup-plugin-terser": "^7.0.2"
   }
 }

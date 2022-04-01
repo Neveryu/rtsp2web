@@ -1,4 +1,4 @@
-const RTSP2web = require('../main.js')
+const RTSP2web = require('../dist/rtsp2web.js')
 
 // 服务端长连接占据的端口号
 const port = 9999

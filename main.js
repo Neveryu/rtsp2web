@@ -159,10 +159,13 @@ class Channel {
   }
 }
 
+import { version } from './package.json'
+
 /**
  * 入口类
  */
 class RTSP2web {
+  static version = version
 	// 视频实例列表(以rtsp_url作为唯一区分)
 	channels = []
 	/**
