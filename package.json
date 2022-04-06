@@ -13,16 +13,18 @@
     "dist"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "pm2 start example/index.js --name rtsp",
-    "stop": "pm2 stop rtsp",
+    "pretest": "echo \"begin\" test",
+    "test": "npm start",
+    "start": "pm2 start test/index.js --name rtsp-res",
+    "stop": "pm2 stop rtsp-res",
+    "delete": "pm2 delete rtsp-res",
     "prebuild": "rimraf dist",
     "build": "rollup -c rollup.config.js",
-    "delete": "pm2 delete rtsp",
     "restart": "npm stop && npm run delete && npm start",
-    "node": "node example/index.js",
+    "node-start": "node test/index.js",
     "stop-all": "pm2 stop all",
     "delete-all": "pm2 delete all",
+    "destroy-all": "npm run stop-all && npm run delete-all",
     "list": "pm2 list",
     "monit": "pm2 monit",
     "reload": "pm2 reload all"
@@ -47,9 +49,13 @@
     "ws": "^8.5.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.17.8",
+    "@babel/preset-env": "^7.16.11",
+    "@rollup/plugin-commonjs": "^21.0.3",
     "lodash.camelcase": "^4.3.0",
     "rimraf": "^3.0.2",
     "rollup": "^2.70.1",
+    "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "^5.2.0",

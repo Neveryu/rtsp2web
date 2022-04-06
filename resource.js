@@ -4,10 +4,8 @@ const events = require('events')
 const url = require('url')
 const http = require('http')
 const querystring = require('querystring')
-// const { decode } = require('base-64')
-import { decode } from 'base-64'
-import WebSocket from 'ws'
-// const WebSocket = require('ws')
+const { decode } = require('base-64')
+const WebSocket = require('ws')
 const WebSocketServer = WebSocket.Server
 
 /**
@@ -161,13 +159,10 @@ class Channel {
   }
 }
 
-import { version } from './package.json'
-
 /**
  * 入口类
  */
 class RTSP2web {
-  static version = version
 	// 视频实例列表(以rtsp_url作为唯一区分)
 	channels = []
 	/**

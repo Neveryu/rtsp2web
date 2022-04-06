@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no,viewport-fit=cover">
+  <script src="https://jsmpeg.com/jsmpeg.min.js" charset="utf-8"></script>
+  <title>播放rtsp</title>
+</head>
+<body>
+<canvas id="canvas_1" style="width: 600px; height: 600px;"></canvas>
+
+<canvas id="canvas_2" style="width: 600px; height: 600px;"></canvas>
+
+<canvas id="canvas_3" style="width: 600px; height: 600px;"></canvas>
+</body>
+<script>
+	var rtsp1 = 'rtsp://admin:123456aa@172.16.1.70/Streaming/Channels/102'
+	var rtsp2 = 'rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4'
+	var rtsp3 = 'rtmp://58.200.131.2:1935/livetv/hunantv'
+  window.onload = () => {
+  	// 将rtsp视频流地址进行btoa处理一下
+    new JSMpeg.Player("ws://localhost:9998/flv?url="+btoa(rtsp1), {
+       canvas : document.getElementById("canvas_1")
+    })
+    new JSMpeg.Player("ws://localhost:9998/flv?url="+btoa(rtsp2), {
+       canvas : document.getElementById("canvas_2")
+    })
+    new JSMpeg.Player("ws://localhost:9998/flv?url="+btoa(rtsp3), {
+       canvas : document.getElementById("canvas_3")
+    })
+  }
+</script>
+</html>

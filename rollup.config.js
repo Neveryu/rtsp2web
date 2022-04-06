@@ -1,9 +1,10 @@
 import resolve from 'rollup-plugin-node-resolve'
-import commonjs from 'rollup-plugin-commonjs'
+import commonjs from '@rollup/plugin-commonjs'
 import sourceMaps from 'rollup-plugin-sourcemaps'
 import camelCase from 'lodash.camelcase'
 import json from 'rollup-plugin-json'
 import { terser } from 'rollup-plugin-terser'
+import babel from 'rollup-plugin-babel'
 
 const pkg = require('./package.json')
 
@@ -30,26 +31,37 @@ export default {
     	sourcemap: true,
     	plugins: terser({ compress: { drop_console: false } }),
     	banner: banner
-    },
-    // { file: pkg.module, format: 'cjs', sourcemap: true },
+    }
   ],
   // Indicate here external modules you don't wanna include in your bundle (i.e.: 'lodash')
+  // Rollup 默认只解析相对路径的模块,对于以绝对路径引入的模块,不会作为bundle的一部分引入，
+  // 这种模块会作为运行时的外部依赖，如果你就是想这样，你可以将模块id写入external数组。
   external: [],
   plugins: [
     // Allow json resolution | 它允许 Rollup 从 JSON 文件中导入数据
     json(),
-    // Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
-    // rollup-plugin-commonjs 插件就是用来将 CommonJS 转换成 ES2015 模块的。
-    // 请注意，rollup-plugin-commonjs应该用在其他插件转换你的模块之前 - 这是为了防止其他插件的改变破坏CommonJS的检测。
-    commonjs(),
-    
+
     // Allow node_modules resolution, so you can use 'external' to control
     // which external modules to include in the bundle
     // https://github.com/rollup/rollup-plugin-node-resolve#usage
-    resolve(),
+    resolve({
+      customResolveOptions: {
+        moduleDirectory: 'node_modules'
+      }
+    }),
+
+    // Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
+    // rollup-plugin-commonjs 插件就是用来将 CommonJS 转换成 ES2015 模块的。
+    // 请注意，rollup-plugin-commonjs应该用在其他插件转换你的模块之前
+    // 这是为了防止其他插件的改变破坏CommonJS的检测。
+    commonjs(),
+
+    babel({
+      exclude: 'node_modules/**'
+    }),
 
     // Resolve source maps to the original source
-    sourceMaps(),
+    sourceMaps()
   ],
 }
 
