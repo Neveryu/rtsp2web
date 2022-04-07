@@ -1,3 +1,9 @@
+/*!
+ * name: resource.js
+ * desc: resource.js是rtsp2web的源码；可以直接参考test目录中的用法直接使用
+ * (c) begin with 2022 by NeverYu
+ * Released under the ISC License.
+ */
 const child = require('child_process')
 const util = require('util')
 const events = require('events')

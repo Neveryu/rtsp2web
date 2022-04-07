@@ -15,7 +15,7 @@
   "scripts": {
     "pretest": "echo \"begin\" test",
     "test": "npm start",
-    "start": "pm2 start test/index.js --name rtsp-res",
+    "start": "pm2 start test/index.js --name rtsp-res -f",
     "stop": "pm2 stop rtsp-res",
     "delete": "pm2 delete rtsp-res",
     "prebuild": "rimraf dist",

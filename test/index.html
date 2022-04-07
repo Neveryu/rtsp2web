@@ -20,13 +20,13 @@
 	var rtsp3 = 'rtmp://58.200.131.2:1935/livetv/hunantv'
   window.onload = () => {
   	// 将rtsp视频流地址进行btoa处理一下
-    new JSMpeg.Player("ws://localhost:9998/flv?url="+btoa(rtsp1), {
+    new JSMpeg.Player("ws://localhost:8888/flv?url="+btoa(rtsp1), {
        canvas : document.getElementById("canvas_1")
     })
-    new JSMpeg.Player("ws://localhost:9998/flv?url="+btoa(rtsp2), {
+    new JSMpeg.Player("ws://localhost:8888/flv?url="+btoa(rtsp2), {
        canvas : document.getElementById("canvas_2")
     })
-    new JSMpeg.Player("ws://localhost:9998/flv?url="+btoa(rtsp3), {
+    new JSMpeg.Player("ws://localhost:8888/flv?url="+btoa(rtsp3), {
        canvas : document.getElementById("canvas_3")
     })
   }
