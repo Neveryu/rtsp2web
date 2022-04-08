@@ -1,14 +1,20 @@
+/*!
+ * name: main.js
+ * desc: 为了将rtsp2web发布为一个 npm 包；
+ * 由于resource.js中require了一些第三方node包，在使用rollup打包时，
+ * 不符合模块打包的规范（import是符合模块打包规范的）
+ * main.js就是将resource.js进行轻微的改动；以及精简（为了打包产物最小化）
+ * 这样可以使用rollup进行打包处理，以及做一些压缩和babel的处理
+ * 打包后的产物直接看dist目录里面的吧，使用方法参考example目录
+ * (c) begin with 2022 by NeverYu
+ * Released under the ISC License.
+ */
 const child = require('child_process')
-const util = require('util')
 const events = require('events')
 const url = require('url')
-const http = require('http')
-const querystring = require('querystring')
-// const { decode } = require('base-64')
 import { decode } from 'base-64'
-import WebSocket from 'ws'
-// const WebSocket = require('ws')
-const WebSocketServer = WebSocket.Server
+import { Server } from 'ws'
+const WebSocketServer = Server
 
 /**
  * 用于创建一个新的视频转码流类

@@ -1,6 +1,6 @@
 {
   "name": "rtsp2web",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "description": "帮你在web页面中直接播放rtsp视频流，支持同时播放多个",
   "keywords": [
     "rtsp",
@@ -9,13 +9,14 @@
     "socket.io"
   ],
   "main": "dist/rtsp2web.js",
+  "module": "dist/rtsp2web.min.js",
   "files": [
     "dist"
   ],
   "scripts": {
     "pretest": "echo \"begin\" test",
     "test": "npm start",
-    "start": "pm2 start test/index.js --name rtsp-res -f",
+    "start": "npm run delete-all & pm2 start test/index.js --name rtsp-res --watch -f",
     "stop": "pm2 stop rtsp-res",
     "delete": "pm2 delete rtsp-res",
     "prebuild": "rimraf dist",
@@ -27,7 +28,10 @@
     "destroy-all": "npm run stop-all && npm run delete-all",
     "list": "pm2 list",
     "monit": "pm2 monit",
-    "reload": "pm2 reload all"
+    "reload": "pm2 reload all",
+    "preexample": "echo \"先编译生成构建产物，再使用 ",
+    "example": "npm run build && npm run delete-all & pm2 start example/index.js --name rtsp -f",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",

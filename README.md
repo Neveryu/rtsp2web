@@ -1,12 +1,13 @@
 # rtsp2web
 
-`rtsp2web` 是一个提供在`web`页面中直接播放`rtsp`视频流的解决方案。
+`rtsp2web` 是一个提供在 `web` 页面中直接播放 `rtsp` 视频流解决方案的工具。
 
-**【写在前面】**
-`refer` 是一个小的独立的 `demo` 程序，学习它对你有很大的帮助。
-
+**【前言】**
+[refer](./refer) 是一个小的独立的 `demo` 程序，学习它对你有很大的帮助（都有注释的）。
 
 # how to use
+`npm i rtsp2web`
+
 ```js
 // main.js
 const RTSP2web = require('rtsp2web')
@@ -17,7 +18,8 @@ new RTSP2web({
   port
 })
 ```
-Run: `node main.js`
+
+运行 `node main.js`
 
 ```html
 // index.html
@@ -35,8 +37,8 @@ Run: `node main.js`
 <canvas id="canvas_2" style="width: 600px; height: 600px;"></canvas>
 </body>
 <script>
-  var rtsp1 = 'rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov'
-  var rtsp2 = 'rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov'
+  var rtsp1 = 'rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4'
+  var rtsp2 = 'rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4'
   window.onload = () => {
     // 将rtsp视频流地址进行btoa处理一下
     new JSMpeg.Player("ws://localhost:9999/flv?url="+btoa(rtsp1), {
@@ -50,3 +52,10 @@ Run: `node main.js`
 </html>
 ```
 打开 `index.html`。
+
+详情参考例子：[https://github.com/Neveryu/rtsp2web/tree/master/example](https://github.com/Neveryu/rtsp2web/tree/master/example)
+
+# donate
+If you think rtsp2web help you. maybe you can donate a litter. :beers::beers:
+
+[donate link](https://neveryu.github.io/reward/index.html)

@@ -1,5 +1,5 @@
 import resolve from 'rollup-plugin-node-resolve'
-import commonjs from '@rollup/plugin-commonjs'
+import commonjs from '@rollup/plugin-commonjs' // 这里之前有试过使用rollup-plugin-commonjs，发现不行
 import sourceMaps from 'rollup-plugin-sourcemaps'
 import camelCase from 'lodash.camelcase'
 import json from 'rollup-plugin-json'
