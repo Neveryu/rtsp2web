@@ -41,10 +41,10 @@ new RTSP2web({
   var rtsp2 = 'rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4'
   window.onload = () => {
     // 将rtsp视频流地址进行btoa处理一下
-    new JSMpeg.Player("ws://localhost:9999/flv?url="+btoa(rtsp1), {
+    new JSMpeg.Player("ws://localhost:9999/rtsp?url="+btoa(rtsp1), {
        canvas : document.getElementById("canvas_1")
     })
-    new JSMpeg.Player("ws://localhost:9999/flv?url="+btoa(rtsp2), {
+    new JSMpeg.Player("ws://localhost:9999/rtsp?url="+btoa(rtsp2), {
        canvas : document.getElementById("canvas_2")
     })
   }
