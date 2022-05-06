@@ -8,24 +8,31 @@ const child = require('child_process')
 const util = require('util')
 const events = require('events')
 const url = require('url')
-const http = require('http')
-const querystring = require('querystring')
 const { decode } = require('base-64')
 const WebSocket = require('ws')
 const WebSocketServer = WebSocket.Server
+
+// 默认的ffmpeg路径（一般正常安装的ffmpeg，名称/路径是：ffmpeg）
+const FFmpegPath = 'ffmpeg'
+
+// 默认的端口
+const defaultPort = 9999
+// 默认的视频视口框架大小
+const videoSize = '1920x1080'
 
 /**
  * 用于创建一个新的视频转码流类
  */
 class Mpeg2Muxer extends events.EventEmitter {
   exitCode = undefined
+  // 格外的 ffmpeg 参数
   additionalFlags = []
   stream = null
   inputStreamStarted = false
   constructor(options) {
     super()
     this.options = options
-    this.ffmpegPath = options.ffmpegPath
+    this.ffmpegPath = options.ffmpegPath || FFmpegPath
     this.url = options.url
     this.ffmpegOptions = options.ffmpegOptions
     this.initMpeg2Muxer()
@@ -57,6 +64,18 @@ class Mpeg2Muxer extends events.EventEmitter {
     this.stream = child.spawn(this.ffmpegPath, this.spawnOptions, {
       detached: false
     })
+
+    this.stream.on('error', (code, signal) => {
+      console.error('ffmpeg启动时出错，请检查')
+    })
+    this.stream.on('close', (code, signal) => {
+      console.log('close--', code, '-', signal)
+      return this.emit('exitWithError')
+    })
+    // 【todo]
+    // 这里应该处理更多的关于stream的异常
+    // 包括但不限于创建失败，创建错误等情况
+
     this.inputStreamStarted = true
     this.stream.stdout.on('data', (data) => {
       return this.emit('mpeg2data', data)
@@ -64,6 +83,7 @@ class Mpeg2Muxer extends events.EventEmitter {
     this.stream.stderr.on('data', (data) => {
       return this.emit('ffmpegStderr', data)
     })
+
     this.stream.on('exit', (code, signal) => {
       if (code === 1) {
         console.error('RTSP stream exited with error')
@@ -113,14 +133,19 @@ class Channel {
       ffmpegOptions : {
         "-stats": "", // 没有必要值的选项使用空字符串
         "-r": 20,
-        "-s": "1920x1080",
+        "-s": videoSize,
         "-b:v": "2000k"
       },
       url: this.config.url,
-      ffmpegPath: "ffmpeg"
+      ffmpegPath: "ffmpeg-22"
 		})
     this.mpeg2Muxer.stream = this.mpeg2Muxer.instance.stream
     this.mpeg2Muxer.instance.on('mpeg2data', (data) => {
+      /**
+       * 【广播数据】
+       * rtsp视频流实时转帧之后，当前视频流通道实时进行广播
+       * 将图像数据广播给它的所有client（也就是它的每个ws句柄）
+       */
       this.broadcast(data)
       // this.mpeg2Muxer.data = data
     })
@@ -181,7 +206,7 @@ class RTSP2web {
 
   	// 创建websocket服务器，监听在${port}端口
   	this.wss = new WebSocketServer({
-  		port: config ? config.port || 9999 : 9999
+  		port: config ? config.port || defaultPort : defaultPort
   	})
 
   	/**
@@ -209,7 +234,8 @@ class RTSP2web {
   }
 
   /**
-   * 注册一个视频播放流(注册一个ws句柄)
+   * 注册一个视频播放流通道(注册一个ws句柄)
+   * 一个视频流通道，可能有多个ws句柄(客户端)在同时使用
    */
   registeClient(ws, data) {
   	let channel = this.getChannel(data.url)
@@ -228,6 +254,14 @@ class RTSP2web {
   	return null
   }
 
+  /**
+   * 创建一个视频通道
+   * @Author   Author
+   * @DateTime 2022-05-06T14:40:28+0800
+   * @param    {[type]}                 data [description]
+   * @param    {[type]}                 ws   [description]
+   * @return   {[type]}                      [description]
+   */
   createChannel(data, ws) {
     // 一个channel就是一个视频通道
   	const channel = new Channel(data, ws)
