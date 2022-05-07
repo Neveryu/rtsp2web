@@ -12,9 +12,8 @@ const { decode } = require('base-64')
 const WebSocket = require('ws')
 const WebSocketServer = WebSocket.Server
 
-// 默认的ffmpeg路径（一般正常安装的ffmpeg，名称/路径是：ffmpeg）
+// 默认的ffmpeg路径（一般正常安装的ffmpeg，名称(路径)是：ffmpeg）
 const FFmpegPath = 'ffmpeg'
-
 // 默认的端口
 const defaultPort = 9999
 // 默认的视频视口框架大小
@@ -25,7 +24,7 @@ const videoSize = '1920x1080'
  */
 class Mpeg2Muxer extends events.EventEmitter {
   exitCode = undefined
-  // 格外的 ffmpeg 参数
+  // 额外的 ffmpeg 参数
   additionalFlags = []
   stream = null
   inputStreamStarted = false
@@ -66,15 +65,12 @@ class Mpeg2Muxer extends events.EventEmitter {
     })
 
     this.stream.on('error', (code, signal) => {
-      console.error('ffmpeg启动时出错，请检查')
+      console.error('启动ffmpeg时出错，请确保你安装了ffmpeg，然后检查路径或者命令参数')
     })
     this.stream.on('close', (code, signal) => {
-      console.log('close--', code, '-', signal)
+      console.log('ffmpeg关闭，code：', code)
       return this.emit('exitWithError')
     })
-    // 【todo]
-    // 这里应该处理更多的关于stream的异常
-    // 包括但不限于创建失败，创建错误等情况
 
     this.inputStreamStarted = true
     this.stream.stdout.on('data', (data) => {
@@ -137,7 +133,7 @@ class Channel {
         "-b:v": "2000k"
       },
       url: this.config.url,
-      ffmpegPath: "ffmpeg-22"
+      ffmpegPath: "ffmpeg"
 		})
     this.mpeg2Muxer.stream = this.mpeg2Muxer.instance.stream
     this.mpeg2Muxer.instance.on('mpeg2data', (data) => {
@@ -229,7 +225,7 @@ class RTSP2web {
         	url
         })
     	}
-      console.log('ws连接成功')
+      console.log('一个新的client(ws句柄)连接成功')
   	})
   }
 

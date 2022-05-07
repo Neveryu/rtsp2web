@@ -16,18 +16,26 @@ import { decode } from 'base-64'
 import { Server } from 'ws'
 const WebSocketServer = Server
 
+// 默认的ffmpeg路径（一般正常安装的ffmpeg，名称(路径)是：ffmpeg）
+const FFmpegPath = 'ffmpeg'
+// 默认的端口
+const defaultPort = 9999
+// 默认的视频视口框架大小
+const videoSize = '1920x1080'
+
 /**
  * 用于创建一个新的视频转码流类
  */
 class Mpeg2Muxer extends events.EventEmitter {
   exitCode = undefined
+  // 额外的 ffmpeg 参数
   additionalFlags = []
   stream = null
   inputStreamStarted = false
   constructor(options) {
     super()
     this.options = options
-    this.ffmpegPath = options.ffmpegPath
+    this.ffmpegPath = options.ffmpegPath || FFmpegPath
     this.url = options.url
     this.ffmpegOptions = options.ffmpegOptions
     this.initMpeg2Muxer()
@@ -59,6 +67,15 @@ class Mpeg2Muxer extends events.EventEmitter {
     this.stream = child.spawn(this.ffmpegPath, this.spawnOptions, {
       detached: false
     })
+
+    this.stream.on('error', (code, signal) => {
+      console.error('启动ffmpeg时出错，请确保你安装了ffmpeg，然后检查路径或者命令参数')
+    })
+    this.stream.on('close', (code, signal) => {
+      console.log('ffmpeg关闭，code：', code)
+      return this.emit('exitWithError')
+    })
+
     this.inputStreamStarted = true
     this.stream.stdout.on('data', (data) => {
       return this.emit('mpeg2data', data)
@@ -115,7 +132,7 @@ class Channel {
       ffmpegOptions : {
         "-stats": "", // 没有必要值的选项使用空字符串
         "-r": 20,
-        "-s": "1920x1080",
+        "-s": videoSize,
         "-b:v": "2000k"
       },
       url: this.config.url,
@@ -123,6 +140,11 @@ class Channel {
 		})
     this.mpeg2Muxer.stream = this.mpeg2Muxer.instance.stream
     this.mpeg2Muxer.instance.on('mpeg2data', (data) => {
+      /**
+       * 【广播数据】
+       * rtsp视频流实时转帧之后，当前视频流通道实时进行广播
+       * 将图像数据广播给它的所有client（也就是它的每个ws句柄）
+       */
       this.broadcast(data)
       // this.mpeg2Muxer.data = data
     })
@@ -186,7 +208,7 @@ class RTSP2web {
 
   	// 创建websocket服务器，监听在${port}端口
   	this.wss = new WebSocketServer({
-  		port: config ? config.port || 9999 : 9999
+  		port: config ? config.port || defaultPort : defaultPort
   	})
 
   	/**
@@ -209,7 +231,7 @@ class RTSP2web {
         	url
         })
     	}
-      console.log('ws连接成功')
+      console.log('一个新的client(ws句柄)连接成功')
   	})
   }
 
@@ -233,6 +255,14 @@ class RTSP2web {
   	return null
   }
 
+  /**
+   * 创建一个视频通道
+   * @Author   Author
+   * @DateTime 2022-05-06T14:40:28+0800
+   * @param    {[type]}                 data [description]
+   * @param    {[type]}                 ws   [description]
+   * @return   {[type]}                      [description]
+   */
   createChannel(data, ws) {
     // 一个channel就是一个视频通道
   	const channel = new Channel(data, ws)

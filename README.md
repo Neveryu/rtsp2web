@@ -6,8 +6,12 @@
 [refer](./refer) 是一个小的独立的 `demo` 程序，学习它对你有很大的帮助（都有注释的）。
 
 # how to use
-`npm i rtsp2web`
+1、 安装依赖
+```
+npm i rtsp2web
+```
 
+2、 创建一个新建 `js` 文件（例如：`main.js`）
 ```js
 // main.js
 const RTSP2web = require('rtsp2web')
@@ -19,8 +23,9 @@ new RTSP2web({
 })
 ```
 
-运行 `node main.js`
+3、 运行 `node main.js`，启动视频流转码服务
 
+4、 在页面中播放视频
 ```html
 // index.html
 <!DOCTYPE html>
@@ -51,9 +56,10 @@ new RTSP2web({
 </script>
 </html>
 ```
-打开 `index.html`。
 
-详情参考例子：[https://github.com/Neveryu/rtsp2web/tree/master/example](https://github.com/Neveryu/rtsp2web/tree/master/example)
+> PS： 在页面中播放视频，需要依赖 `jsmpeg.js` 工具包
+
+详细参考例子：[https://github.com/Neveryu/rtsp2web/tree/master/example](https://github.com/Neveryu/rtsp2web/tree/master/example)
 
 # donate
 If you think rtsp2web help you. maybe you can donate a litter. :beers::beers:

@@ -1,6 +1,6 @@
 {
   "name": "rtsp2web",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "帮你在web页面中直接播放rtsp视频流，支持同时播放多个",
   "keywords": [
     "rtsp",
@@ -31,7 +31,9 @@
     "reload": "pm2 reload all",
     "preexample": "echo \"先编译生成构建产物，再使用 ",
     "example": "npm run build && npm run delete-all & pm2 start example/index.js --name rtsp -f",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "prelog": "echo 开始打印日志",
+    "log": "pm2 log"
   },
   "repository": {
     "type": "git",
