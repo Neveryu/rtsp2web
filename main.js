@@ -203,6 +203,13 @@ class RTSP2web {
    * @param http HTTP服务
    */
   constructor(config) {
+    // 用户可以自定义分辨率
+    if(config && config.videoSize) {
+      if(config.videoSize.includes('x')) {
+        videoSize = config.videoSize
+      }
+    }
+
     // RTSP2web是入口类，在入口类中对视频通道进行空闲检测
     setInterval(() => this.checkFree(), 10000)
 

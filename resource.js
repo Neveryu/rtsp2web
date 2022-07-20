@@ -17,7 +17,7 @@ const FFmpegPath = 'ffmpeg'
 // 默认的端口
 const defaultPort = 9999
 // 默认的视频视口框架大小
-const videoSize = '1920x1080'
+let videoSize = '1920x1080'
 
 /**
  * 用于创建一个新的视频转码流类
@@ -197,6 +197,13 @@ class RTSP2web {
    * @param http HTTP服务
    */
   constructor(config) {
+    // 用户可以自定义分辨率
+    if(config && config.videoSize) {
+      if(config.videoSize.includes('x')) {
+        videoSize = config.videoSize
+      }
+    }
+
     // RTSP2web是入口类，在入口类中对视频通道进行空闲检测
     setInterval(() => this.checkFree(), 10000)
 
