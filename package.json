@@ -1,6 +1,6 @@
 {
   "name": "rtsp2web",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "帮你在web页面中直接播放rtsp视频流，支持同时播放多个",
   "keywords": [
     "rtsp",

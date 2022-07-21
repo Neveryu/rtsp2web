@@ -52,7 +52,8 @@ class Mpeg2Muxer extends events.EventEmitter {
     }
     // 参数整合拼接
     this.spawnOptions = [
-      "-rtsp_transport", "tcp", "-thread_queue_size", "512",
+      "-rtsp_transport", "tcp",
+      "-thread_queue_size", "512",
       "-i",
       this.url,
       '-f',
