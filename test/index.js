@@ -10,7 +10,7 @@ const port = 8888
  * 具体传哪个值比较好，应该根据您的摄像头分辨率来设置
  * 例如：720x360；1080x720；等等之类的值
  */
-const videoSize = '720x360'
+const videoSize = '1920x1080'
 
 new RTSP2web({
 	port,
