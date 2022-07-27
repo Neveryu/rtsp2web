@@ -16,12 +16,24 @@ npm i rtsp2web
 // main.js
 const RTSP2web = require('rtsp2web')
 
-// 服务端长连接占据的端口号
+// 服务端长连接占据的端口号；端口号可以自定义
 const port = 9999
+// 分辨率
+const videoSize = '1920x1080'
+
 new RTSP2web({
-  port
+  port,
+  videoSize 
 })
 ```
+
+2.1、参数说明
+
+参数 | 解释说明
+:---: | :---:
+port | 转码服务占用的端口号；（type：Number）<br/>默认值：9999
+videoSize | 摄像头分辨率；（type：String）<br/>默认值：'1920x1080'<br/> 如果播放出来的视频花屏，马赛克，比例不对等等问题，可以调整这个参数
+
 
 3、 运行 `node main.js`，启动视频流转码服务
 
@@ -57,7 +69,7 @@ new RTSP2web({
 </html>
 ```
 
-> PS： 在页面中播放视频，需要依赖 `jsmpeg.js` 工具包
+> PS： 在页面中播放视频，需要依赖 `jsmpeg.js` 工具包，请记得引入 `jsmpeg.js`。
 
 详细参考例子：[https://github.com/Neveryu/rtsp2web/tree/master/example](https://github.com/Neveryu/rtsp2web/tree/master/example)
 
