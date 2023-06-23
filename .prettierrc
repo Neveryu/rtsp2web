@@ -1,0 +1,18 @@
+{
+  "_readme": "如果options.editorconfig为true，并且在你的项目中存在一个.editorconfig文件，Prettier将解析它并将其属性转换为相应的Prettier配置。这个配置将被.prettierrc等所覆盖。",
+  "_readme2": "为了与MacOS、Linux保持一致，使用endOfLine: lf，而不是crlf",
+  "semi": false,
+  "singleQuote": true,
+  "trailingComma": "none",
+  "printWidth": 80,
+  "endOfLine": "lf",
+  "space-before-function-paren": 0,
+  "overrides": [
+    {
+      "files": ".prettierrc",
+      "options": {
+        "parser": "json"
+      }
+    }
+  ]
+}

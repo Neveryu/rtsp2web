@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover"
+    />
+    <!-- <script src="https://cdn.shinobi.video/js/flv.min.js" charset="utf-8"></script> -->
+    <script src="./flv.min.js" charset="utf-8"></script>
+    <title>【验证构建后的产物】-播放rtsp-example目录</title>
+  </head>
+
+  <body>
+    <p>flv.js 和 jsmpeg.js 不要同时使用。</p>
+    <p>
+      当前页面使用的是 flv.js 播放器，请确保你在运行 index.js
+      的时候，使用了正确的配置。
+    </p>
+    <p>在 index.js 中，加上 webplayer: 'flv' 的配置。</p>
+    <p>
+      <code> let port = 9999 </code>
+      <br />
+      <code> RTSP2web({</code>
+      <br />
+      <code>&nbsp;&nbsp;port,</code>
+      <br />
+      <code>&nbsp;&nbsp;q: 20,</code>
+      <br />
+      <code>&nbsp;&nbsp;webplayer: 'flv'
+      <br />
+      <code>}) </code>
+      <br />
+    </p>
+    <p><i>如果使用 flv.js 来播放的话，页面中就不要再引入使用 jsmpeg 了。</i></p>
+    <!-- Flv -->
+    <video
+      id="flv-1"
+      height="500"
+      muted
+      style="border: thin solid green"
+      controls
+      loop
+    ></video>
+    <!-- Flv End -->
+  </body>
+  <script>
+    var rtsp1 = 'rtmp://mobliestream.c3tv.com:554/live/goodtv.sdp'
+    // 'rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4'
+    window.onload = () => {
+      console.log('flvjs 是否支持：', flvjs.isSupported())
+      if (flvjs.isSupported()) {
+        var videoElement = document.getElementById('flv-1')
+        var flvPlayer = flvjs.createPlayer({
+          isLive: true,
+          type: 'flv',
+          url: 'ws://localhost:9999/rtsp?url=' + btoa(rtsp1),
+          enableWorker: true,
+          enableStashBuffer: false,
+          stashInitialSize: 128 // 减少首桢显示等待时长
+        })
+        flvPlayer.attachMediaElement(videoElement)
+        try {
+          flvPlayer.load()
+          flvPlayer.play()
+          // flvPlayer.pause()
+        } catch (err) {
+          // console.log(err)
+        }
+      }
+    }
+  </script>
+</html>

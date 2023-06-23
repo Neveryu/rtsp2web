@@ -1,0 +1,17 @@
+# https://editorconfig.org
+# 如果options.editorconfig为true，并且在你的项目中存在一个.editorconfig文件，
+# Prettier将解析它并将其属性转换为相应的Prettier配置。这个配置将被.prettierrc等所覆盖。
+root = true
+
+[*]
+charset = utf-8
+indent_style = space
+indent_size = 2
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+
+[*.md]
+insert_final_newline = false
+trim_trailing_whitespace = false

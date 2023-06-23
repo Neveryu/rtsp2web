@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover"
+    />
+    <!-- <script src="https://jsmpeg.com/jsmpeg.min.js" charset="utf-8"></script> -->
+    <script src="./jsmpeg.min.js" charset="utf-8"></script>
+
+    <!-- <script src="https://cdn.shinobi.video/js/flv.min.js" charset="utf-8"></script> -->
+    <script src="./flv.min.js" charset="utf-8"></script>
+    <title>【验证构建后的产物】-播放rtsp-example目录</title>
+  </head>
+
+  <body>
+    <p>本示例中使用的是 jsmpeg 来进行播放的。</p>
+    <p>
+      我在本示例中，使用的是一个开放的直播视频流，可能加载速度会很慢，播放时会很不流畅！请等待...
+    </p>
+    <!-- JSMpeg -->
+    <!-- 方式一: 只给定宽度或者高度，另外一个值将会自适应；整体比例与原视频一致 -->
+    <canvas id="canvas-1" style="width: 400px"></canvas>
+
+    <!-- 方式二: 可以自定义视频播放窗口的宽度和高度，会铺满，比例可能与原视频不一致了-->
+    <canvas id="canvas-2" style="width: 400px; height: 400px"></canvas>
+
+    <!-- 方式三：虽然设置了固定的宽高，但是视频还是会选择安宽度来自适应，比例与原视频保持一致 -->
+    <!-- 使用div + class="jsmpeg" + data-url的方式 -->
+    <!-- <div
+      class="jsmpeg"
+      id="canvas-3"
+      style="width: 400px; height: 400px; border: 1px solid red"
+      data-url="ws://localhost:9999/rtsp?url=cnRzcDovL3dvd3phZWMyZGVtby5zdHJlYW1sb2NrLm5ldC92b2QvbXA0OkJpZ0J1Y2tCdW5ueV8xMTVrLm1wNA=="
+    ></div> -->
+    <!-- JSMpeg End -->
+
+    <!-- 方式四：不给定宽度和高度，视频将会和视频源大小保持一致-->
+    <canvas id="canvas-4"></canvas>
+  </body>
+  <script>
+    var rtsp1 = 'rtmp://mobliestream.c3tv.com:554/live/goodtv.sdp'
+    window.onload = () => {
+      // 将rtsp视频流地址进行btoa处理一下
+      new JSMpeg.Player('ws://localhost:9999/rtsp?url=' + btoa(rtsp1), {
+        canvas: document.getElementById('canvas-1')
+      })
+
+      // 将rtsp视频流地址进行btoa处理一下，还可以加一点参数
+      new JSMpeg.Player(
+        'ws://localhost:9999/rtsp?url=' +
+          btoa(rtsp1) +
+          '&brightness=0.2&saturation=1.8',
+        {
+          canvas: document.getElementById('canvas-2')
+        }
+      )
+
+      // 将rtsp视频流地址进行btoa处理一下
+      new JSMpeg.Player('ws://localhost:9999/rtsp?url=' + btoa(rtsp1), {
+        canvas: document.getElementById('canvas-4')
+      })
+
+      // 下面是flv
+      console.log('flvjs 是否支持：', flvjs.isSupported())
+      console.log('关于如何使用flv.js，请查看 index-flv.html')
+    }
+  </script>
+</html>

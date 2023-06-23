@@ -1,0 +1,77 @@
+{
+  "name": "rtsp2web",
+  "version": "3.1.6",
+  "description": "帮你在web页面中直接播放rtsp视频流，支持同时播放多个",
+  "keywords": [
+    "rtsp",
+    "rtmp",
+    "flv",
+    "mpeg1video",
+    "rtsp2web",
+    "media source extensions",
+    "ffmpeg",
+    "socket.io"
+  ],
+  "main": "dist/rtsp2web.js",
+  "module": "dist/rtsp2web.min.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "node-test": "node test/index.js",
+    "pretest": "echo \"【start run test directory with pm2】\"",
+    "test": "npm start",
+    "start": "npm run delete-all & pm2 start test/index.js --name rtsp-resource --watch -f",
+    "stop": "pm2 stop rtsp-resource",
+    "delete": "pm2 delete rtsp-resource",
+    "restart": "npm stop && npm run delete && npm start",
+    "prebuild": "rimraf dist",
+    "build": "rollup -c rollup.config.js",
+    "stop-all": "pm2 stop all",
+    "delete-all": "pm2 delete all",
+    "destroy-all": "npm run stop-all && npm run delete-all",
+    "prelist": "echo \"---列出当前pm2中的服务---\"",
+    "list": "pm2 list",
+    "monit": "pm2 monit",
+    "reload": "pm2 reload all",
+    "preexample": "echo \"先编译生成构建产物，再使用\" ",
+    "example": "npm run build && npm run delete-all & pm2 start example/index.js --name rtsp2web -f",
+    "prepublish": "npm run build",
+    "prelog": "echo \"---开始打印日志---\"",
+    "log": "pm2 log"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NeverYu/rtsp2web.git"
+  },
+  "author": {
+    "name": "NeverYu",
+    "email": "never_yu@qq.com",
+    "url": "https://neveryu.github.io"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NeverYu/rtsp2web/issues"
+  },
+  "homepage": "https://github.com/NeverYu/rtsp2web#readme",
+  "dependencies": {
+    "base-64": "^1.0.0",
+    "fluent-ffmpeg": "^2.1.2",
+    "ws": "^8.5.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.8",
+    "@babel/preset-env": "^7.16.11",
+    "@rollup/plugin-commonjs": "^21.0.3",
+    "lodash.camelcase": "^4.3.0",
+    "pm2": "^5.2.0",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.70.1",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-sourcemaps": "^0.6.3",
+    "rollup-plugin-terser": "^7.0.2"
+  }
+}
